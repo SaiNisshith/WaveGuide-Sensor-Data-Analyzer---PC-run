@@ -5,9 +5,9 @@ const path = require('path');
 
 function get_peaks(filePath,notches,low_point,high_point,min_height) {
     return new Promise((resolve, reject) => {
-        if(notches%2!=0){
-            return reject("Odd number of notches are not accepted");
-        }
+        // if(notches%2!=0){
+        //     return reject("Odd number of notches are not accepted");
+        // }
         let results = [];
         fs.createReadStream(filePath)
             .pipe(csv())
