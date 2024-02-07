@@ -7,7 +7,7 @@ const find_peaks = require('./find_peaks');
 async function processFiles(non,pat,low_point,high_point,min_height) {
     const directoryPath = pat;
     try {
-        const fileResults = await find_peaks.findPeaks(6,directoryPath,low_point,high_point,min_height);
+        const fileResults = await find_peaks.findPeaks(non,directoryPath,low_point,high_point,min_height);
         // console.log("Results for ",temp, "deg C : " ,fileResults);
         let sensor = [],w=0,e=1;
         for(let q=0; q<(non/2); q++){

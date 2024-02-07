@@ -31,6 +31,10 @@ async function del_past_2000_records(){
 
 async function insetIntoDb(non,pat,low_point,high_point,min_height,regFunctions,ref_Tof){
     try {
+            non = parseInt(non),
+            low_point = parseFloat(low_point),
+            high_point = parseFloat(high_point),
+            min_height = parseFloat(min_height);
         await del_morethan_3_days_records();
         await del_past_2000_records();
         let tof = await find_tof.readTheExcelFile(non,pat,low_point,high_point,min_height);

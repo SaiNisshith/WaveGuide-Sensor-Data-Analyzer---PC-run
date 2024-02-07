@@ -27,7 +27,10 @@ async function getRegressionEquation(){
     
 }
 
-
+let non = process.env.UWG_NUMBER_OF_NOTCHES,
+    low_point = process.env.UWG_LOW_POINT,
+    high_point = process.env.UWG_HIGH_POINT,
+    min_height = process.env.UWG_MIN_HEIGHT;
 
 watch(process.env.UWG_TRACKING_FOLDER, { recursive: true , filter: /\.csv$/}, async function(evt, name) {
    
@@ -43,7 +46,7 @@ watch(process.env.UWG_TRACKING_FOLDER, { recursive: true , filter: /\.csv$/}, as
              console.log("Error getting the reg equations");
              return;
          }
-         let getThetempvsTime = await find_temp_vs_time.fillintoDB(6,name,160,408,0.4,regressionEquations,ref_Tof);
+         let getThetempvsTime = await find_temp_vs_time.fillintoDB(non,name,low_point,high_point,min_height,regressionEquations,ref_Tof);
         fs.remove(name, err => {
           if (err) return console.error(err)
         //   console.log('success!')
