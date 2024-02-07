@@ -38,7 +38,7 @@ function get_peaks(filePath,notches,low_point,high_point,min_height) {
                     // console.log("This type of data doesn't support this algorithm, kindly check the data or modify the algorithm");
                     return reject("This type of data doesn't support this algorithm, kindly check the data or modify the algorithm");
                 }
-                    // console.log(peaks.sort());
+                    console.log(peaks.sort());
                     resolve(peaks.sort());
             })
             .on('error', (error) => {
