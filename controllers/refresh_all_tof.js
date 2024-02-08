@@ -28,7 +28,7 @@ async function processFiles(non,pat,low_point,high_point,min_height) {
             const filePath = path.join(directoryPath, file);
             try {
                 // const fileResults = await a(filePath,non);
-                const fileResults = await find_peaks.findPeaks(6,filePath,low_point,high_point,min_height);
+                const fileResults = await find_peaks.findPeaks(non,filePath,low_point,high_point,min_height);
                 let temp = file.split('.')[0];
                 // console.log("Results for ",temp, "deg C : " ,fileResults);
                 let sensor = [],w=0,e=1;
@@ -42,7 +42,7 @@ async function processFiles(non,pat,low_point,high_point,min_height) {
                         temperature : parseFloat(temp),
                         time_of_flights : sensor
                     })
-                    console.log(find_tof);
+                    // console.log(find_tof);
                 } catch (error) {
                     console.log("Error in refreshing all tofs ", err);
                 }

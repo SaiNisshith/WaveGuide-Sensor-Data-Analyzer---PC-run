@@ -47,7 +47,7 @@ watch(process.env.UWG_TRACKING_FOLDER, { recursive: true , filter: /\.csv$/}, as
              return;
          }
          let getThetempvsTime = await find_temp_vs_time.fillintoDB(non,name,low_point,high_point,min_height,regressionEquations,ref_Tof);
-        fs.remove(name, err => {
+        await fs.remove(name, err => {
           if (err) return console.error(err)
         //   console.log('success!')
         })
