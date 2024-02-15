@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UWG</title>
+    <style>
+        #container{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        #power{
+            width: 20vw;
+            height: 95dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5px;
+            justify-content:space-around;
+            border-right: 2px solid black;
+        }
+        #chartContainer {
+            min-width: 70dvw ;
+            height: 72dvh;
+            margin: 0px auto 10px 0px;
+            padding-bottom: 30px;
+            border-bottom: 2px dashed black;
+        }
+        #second{
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center
+        }
+        #but{
+            height: 15dvh;
+        }
+        #display{
+            color: black;
+            font-weight: 900;
+            text-align: center;
+            padding: 10px;
+            background-color: rgb(172, 240, 240);
+        }
+        #temp {
+            color: red;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    
+    <div id="container">
+        <div id="power">
+            <span id="display">Temperatue Now : <span id="temp"></span></span>
+            <div>
+                <h3>Variables</h3>
+                <form action="/changeVariables" method="get">
+                    High_point (µ sec):
+                    <input type="number" name="high_point" step="0.00001" value="<%=global_variable.high_point%>">
+                    <br>
+                    Low_Point (µ sec):
+                    <input type="number" name="low_point" step="0.00001"  value="<%=global_variable.low_point%>">
+                    <br>
+                    Min_Height (amp):
+                    <input type="number" name="min_height" step="0.0001" value="<%=global_variable.min_height%>">
+                    <br>
+                    Number of Notches:
+                    <input type="number" name="no_of_notches"value="<%=global_variable.no_of_notches%>">
+                    <br>
+                    Minimum Distance (µ sec) :
+                    <input type="number" name="min_distance" value="<%=global_variable.min_distance%>">
+                    <button type="submit">Edit the variables</button>
+                </form>
+            </div>
+            
+            <div>
+                <hr>
+                <h3>Refresh the feeding data: </h3>
+                <form action="/refresh" method="get">
+                    <input type="text" name="path" placeholder="Feed Data Folder">
+                    <button type="submit">Refresh The data</button>
+                </form>
+                <hr>
+            </div>
+           
+            <div>
+                
+                <h3>Enter the details of the folder to monitor</h3>
+                <form action="/getTimevsTemp" method="get">
+                    <input type="text" placeholder="Enter the folder path" name="folderName">
+                    <br>
+                    
+                    <button type="submit">Monitor this folder</button>
+                    <br>
+                    
+                    <!-- <button type="reset">Stop Monitor this folder</button> -->
+                    <!-- <button type="submit" class="toggle-btn"><i class="fa-solid fa-power-off" style="font-size: 10em;"></i></button> -->
+                </form>
+                
+                
+                
+            </div>
+            
+        </div>
+        <div id="second">
+            <div id="chartContainer">
+                <select id="sensor">
+                    <option selected>---Select any sensor</option>
+                    <% for(let j = 0; j < (global_variable.no_of_notches/2); j++) { %>
+                      <option value="<%= j+1 %>">Sensor-<%= j+1%></option>
+                    <% } %>
+                  </select>
+                  
+                <canvas id="temperatureChart" ></canvas>
+            </div>
+            <hr>
+            <div id="but">
+                
+                <form action="/download/generate-excel" method="get">
+                    <h4>Download the data but please mention the folder and file in this format : C:/Users/DELL/Desktop/Final Project/tempvsTime/file.xlsx</h4>
+                    From: 
+                    <input type="datetime-local" name="from"> - 
+                    To: 
+                    <input type="datetime-local" name="to"> -
+                    <input type="text" name="path" style="width: 25em;" placeholder="Enter the folder and file name you want to save">
+                    <button type="submit">Download</a>
+
+                </form>
+                
+                
+            </div>
+        </div>
+    </div>
+    <script src="/js/main.js">
+        
+    </script>
+    
+</body>
+</html>

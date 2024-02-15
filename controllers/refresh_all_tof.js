@@ -2,11 +2,15 @@ const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
 const TimeofFlight = require('../models/time_of_flight');
+const TimeVsTemp = require('../models/timevstemp');
 const find_peaks = require('./find_peaks');
+const Long_Time_vs_Temp = require('../models/long_time_vs_temp');
 
 async function deleteExisting(){
     try {
         let tof = await TimeofFlight.deleteMany({});
+        await Long_Time_vs_Temp.deleteMany({});
+        await TimeVsTemp.deleteMany({});
         console.log("Deleted Successfully");
     } catch (error) {
         console.log(error);
@@ -17,7 +21,7 @@ async function deleteExisting(){
 
 let results = {};
 
-async function processFiles(non,pat,low_point,high_point,min_height) {
+async function processFiles(non,pat,low_point,high_point,min_height,min_distance) {
     const directoryPath = pat;
     
     try {
@@ -28,7 +32,7 @@ async function processFiles(non,pat,low_point,high_point,min_height) {
             const filePath = path.join(directoryPath, file);
             try {
                 // const fileResults = await a(filePath,non);
-                const fileResults = await find_peaks.findPeaks(non,filePath,low_point,high_point,min_height);
+                const fileResults = await find_peaks.findPeaks(non,filePath,low_point,high_point,min_height,min_distance);
                 let temp = file.split('.')[0];
                 // console.log("Results for ",temp, "deg C : " ,fileResults);
                 let sensor = [],w=0,e=1;
@@ -59,8 +63,8 @@ async function processFiles(non,pat,low_point,high_point,min_height) {
 }
 
 module.exports = {
-    readTheExcelFiles : function(number_of_notches,filePath,low_point,high_point,min_height){
-        return processFiles(number_of_notches,filePath,low_point,high_point,min_height);
+    readTheExcelFiles : function(number_of_notches,filePath,low_point,high_point,min_height,min_distance){
+        return processFiles(number_of_notches,filePath,low_point,high_point,min_height,min_distance);
     }
     
 };

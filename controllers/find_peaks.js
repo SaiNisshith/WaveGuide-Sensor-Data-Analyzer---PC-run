@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 
-function get_peaks(filePath,notches,low_point,high_point,min_height) {
+function get_peaks(filePath,notches,low_point,high_point,min_height,min_distance) {
     return new Promise((resolve, reject) => {
         // if(notches%2!=0){
         //     return reject("Odd number of notches are not accepted");
@@ -24,7 +24,7 @@ function get_peaks(filePath,notches,low_point,high_point,min_height) {
                 for(let i=0; i<results.length; i++){
                     let check = true;
                     for(let j=0; j<peaks.length; j++){
-                        if(Math.abs(results[i].Time- peaks[j])<=15){
+                        if(Math.abs(results[i].Time- peaks[j])<=parseFloat(min_distance)){
                             check = false;
                             
                             break;
@@ -48,7 +48,7 @@ function get_peaks(filePath,notches,low_point,high_point,min_height) {
 }
 
 module.exports = {
-    findPeaks : function(no_of_nothches,file_path,low_point,high_point,min_height){
-        return get_peaks(file_path,no_of_nothches,low_point,high_point,min_height);
+    findPeaks : function(no_of_nothches,file_path,low_point,high_point,min_height,min_distance){
+        return get_peaks(file_path,no_of_nothches,low_point,high_point,min_height,min_distance);
     }
 }

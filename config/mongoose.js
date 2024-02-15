@@ -4,7 +4,7 @@ main().catch(err => console.log(err));
 
 
 async function main() {
-  await mongoose.connect(process.env.UWG_MONGODB_ATLAS_URL);
+  await mongoose.connect("mongodb://127.0.0.1:27017/UWG");
   console.log("Successfully connected to the DB");
 
 }

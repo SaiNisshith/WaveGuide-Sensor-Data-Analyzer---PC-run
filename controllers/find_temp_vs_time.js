@@ -29,7 +29,7 @@ async function del_past_2000_records(){
     }
 }
 
-async function insetIntoDb(non,pat,low_point,high_point,min_height,regFunctions,ref_Tof){
+async function insetIntoDb(non,pat,low_point,high_point,min_height,regFunctions,ref_Tof,min_distance){
     try {
             non = parseInt(non),
             low_point = parseFloat(low_point),
@@ -37,7 +37,7 @@ async function insetIntoDb(non,pat,low_point,high_point,min_height,regFunctions,
             min_height = parseFloat(min_height);
         await del_morethan_3_days_records();
         await del_past_2000_records();
-        let tof = await find_tof.readTheExcelFile(non,pat,low_point,high_point,min_height);
+        let tof = await find_tof.readTheExcelFile(non,pat,low_point,high_point,min_height,min_distance);
         let sub = ref_Tof;
         let deltof = [];
         for(let i=0; i<tof.length; i++){
@@ -64,8 +64,8 @@ async function insetIntoDb(non,pat,low_point,high_point,min_height,regFunctions,
 
 
 module.exports = {
-    fillintoDB : function(non,pat,low_point,high_point,min_height,regFunctions,ref_Tof){
-        return insetIntoDb(non,pat,low_point,high_point,min_height,regFunctions,ref_Tof);
+    fillintoDB : function(non,pat,low_point,high_point,min_height,regFunctions,ref_Tof,min_distance){
+        return insetIntoDb(non,pat,low_point,high_point,min_height,regFunctions,ref_Tof,min_distance);
     }
 }
 

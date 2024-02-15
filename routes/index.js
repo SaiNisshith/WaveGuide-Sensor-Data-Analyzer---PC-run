@@ -3,72 +3,86 @@ const router = express.Router();
 const find_peaks = require('./../controllers/find_peaks');
 const refresh_all_tof = require('./../controllers/refresh_all_tof');
 const find_tof = require('./../controllers/find_tof');
-const regression = require('./../controllers/regression');
+const TimeVsTemp = require('../models/timevstemp');
+const find_temp_vs_time = require('./../controllers/find_temp_vs_time');
+var watch = require('node-watch');
+const fs = require('fs-extra');
+const monitor = require('../controllers/getTempvsTime');
+const global_variable = require('../models/variables');
+const path = require('path');
 
-let non = parseInt(process.env.UWG_NUMBER_OF_NOTCHES),
-    data_load = process.env.UWG_DATA_FEED_PATH,
-    low_point = parseFloat(process.env.UWG_LOW_POINT),
-    high_point = parseFloat(process.env.UWG_HIGH_POINT),
-    min_height = parseFloat(process.env.UWG_MIN_HEIGHT);
 
 console.log("Router is loaded");
 
-router.get('/refresh',async (req,res)=>{
-    
-    try {
-        let alltof = {};
-        await refresh_all_tof.readTheExcelFiles(non,data_load,low_point,high_point,min_height).then(data=>{
-            alltof = data;
-        });
-        return res.status(200).json({
-            refreshed_tofs : alltof
+
+
+router.get("/get_temp_data/:sensor",async (req,res)=>{
+    try{
+        let sensor = parseInt(req.params.sensor);
+        let plot = await TimeVsTemp.find({});
+        let x = [],y=[];
+        for(let i=0; i<plot.length; i++){
+            let time = new Date(plot[i].createdAt + (5*60*60*1000 + 30*60*1000));
+            x.push(time.getDate()+"/"+time.getMonth()+"/"+time.getFullYear() +" ; "+ time.getHours()+":"+time.getMinutes()+":"+time.getSeconds());
+            y.push(parseFloat(plot[i].temperature[sensor-1]));
+        }
+        return res.status(200).send({
+            x : x,
+            y : y
         })
-    } catch (error) {
+    }catch(error){
         return res.status(422).json({
-            err : "Error occured while refreshing the time of flight data"
+            "error" : "Error occured while getting the temp vs time data"
         })
     }
 })
 
-router.get('/get_peaks',async (req,res)=>{
-    console.log(req.query);
-    try {
-        let k = [];
-        let no_of_nothches = req.query.no_of_nothches? parseFloat(req.query.no_of_nothches) : non,
-            low_point = req.query.low_point ? parseFloat(req.query.low_point) : low_point,
-            high_point = req.query.high_point ? parseFloat(req.query.high_point) : high_point,
-            min_height = req.query.min_height ? parseFloat(req.query.min_height) : min_height;
-        await find_peaks.findPeaks(no_of_nothches,req.query.filePath,low_point,high_point,min_height).then(data => {
-            k = data;
-        });
-        return res.status(200).json({
-            "peaks_data(µ sec)" : k
-        })
-    } catch (error) {
-        return res.status(422).json({
-            "error" : "Error occured while getting the peaks kindly check the algorithm or data"
-        })
-    }
-    
+router.get('/changeVariables',async function(req,res){
+    let hi = parseFloat(req.query.high_point),
+        lo = parseFloat(req.query.low_point),
+        mi = parseFloat(req.query.min_height),
+        non = parseInt(req.query.no_of_notches);
+        md = parseFloat(req.query.min_distance);
+    await global_variable.deleteMany({});
+    await global_variable.create({
+        high_point : hi,
+        low_point : lo,
+        min_height : mi,
+        min_distance : md,
+        no_of_notches : non
+    })
+    return res.redirect('back');
 })
 
-
-router.get("/find_temp",async (req,res)=>{
+router.get('/refresh',async function(req,res){
+    let glob = await global_variable.find({});
+    // console.log(glob);
+    let non = glob[0].no_of_notches,
+        high_point = glob[0].high_point,
+        low_point = glob[0].low_point,
+        min_height = glob[0].min_height,
+        min_distance = glob[0].min_distance;
     try {
-        let tof = req.query.time_of_flight;
-        let sensor = req.query.sensor ? req.query.sensor : 1;
-        let getTvsTFuctions = await regression.ToT_Functions;
-        return res.status(200).json({
-            sensor : sensor,
-            "temperature(°C)" : getTvsTFuctions.temp_Functions[sensor-1](tof)[1]
-        })
+        await refresh_all_tof.readTheExcelFiles(parseInt(non),path.resolve(req.query.path),parseFloat(low_point),parseFloat(high_point),parseFloat(min_height),parseFloat(min_distance));
+        return res.redirect('/');
     } catch (error) {
         return res.status(422).json({
-            "error" : "Error occured while getting the temperature" 
+            err : `Error occured while refreshing the time of flight data ${error}`
         })
     }
-    
 })
+
+router.get('/getTimevsTemp',monitor.Monitor);
+
+router.use('/download',require('./download'));
+
+router.get('/',async (req,res)=>{
+    let go = await global_variable.find({});
+    return res.render('main',{
+        global_variable : go[0]
+    });
+})
+module.exports = router;
 
 
 
