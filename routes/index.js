@@ -4,13 +4,13 @@ const find_peaks = require('./../controllers/find_peaks');
 const refresh_all_tof = require('./../controllers/refresh_all_tof');
 const find_tof = require('./../controllers/find_tof');
 const TimeVsTemp = require('../models/timevstemp');
+const mongoose = require('../config/mongoose');
 const find_temp_vs_time = require('./../controllers/find_temp_vs_time');
 var watch = require('node-watch');
 const fs = require('fs-extra');
 const monitor = require('../controllers/getTempvsTime');
 const global_variable = require('../models/variables');
 const path = require('path');
-
 
 console.log("Router is loaded");
 
