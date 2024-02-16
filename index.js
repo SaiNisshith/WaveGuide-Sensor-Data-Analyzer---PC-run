@@ -1,5 +1,5 @@
 const express = require('express');
-const port = process.env.UWG_RUNNING_PORT;
+const port = 7000;
 
 const app = express();
 
@@ -15,11 +15,11 @@ const global_variable = require('./models/variables');
 async function generate(){
     await global_variable.deleteMany({});
     await global_variable.create({
-        high_point : 408,
-        low_point : 160,
-        min_height : 0.4,
-        min_distance : 15,
-        no_of_notches : 6
+        high_point : 301,
+        low_point : 180,
+        min_height : 0.8,
+        min_distance : 20,
+        no_of_notches : 3
     })
 }
 

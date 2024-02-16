@@ -17,7 +17,7 @@ async function getRegressionEquation(){
         check = true;
         return;
     } catch (error) {
-        console.log("Error getting regression e")
+        console.log("Error getting regression equation")
     }
     
 }

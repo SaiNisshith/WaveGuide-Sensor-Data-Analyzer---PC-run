@@ -16,7 +16,8 @@ async function regressionEquationInserter(){
                 coordi.push(point);
             }
             let equ = await reg.polynomial(coordi,{order:6, precision:5});
-            // console.log(equ);
+            console.log(equ);
+            console.log(sub);
             tempFunctions.push(equ.predict);
         }
         let sendObject = {

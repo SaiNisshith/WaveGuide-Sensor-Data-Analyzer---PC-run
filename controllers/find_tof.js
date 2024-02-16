@@ -9,11 +9,15 @@ async function processFiles(non,pat,low_point,high_point,min_height,min_distance
     try {
         const fileResults = await find_peaks.findPeaks(non,directoryPath,low_point,high_point,min_height,min_distance);
         // console.log("Results for ",temp, "deg C : " ,fileResults);
-        let sensor = [],w=0,e=1;
-        for(let q=0; q<(non/2); q++){
-            sensor.push(fileResults[e]-fileResults[w]);
-            e+=2;
-            w+=2;
+        // let sensor = [],w=0,e=1;
+        // for(let q=0; q<(non/2); q++){
+        //     sensor.push(fileResults[e]-fileResults[w]);
+        //     e+=2;
+        //     w+=2;
+        // }
+        let sensor = [];
+        for(let q=0; q<(non-1); q++){
+            sensor.push(fileResults[q+1]-fileResults[q]);
         }
         return sensor;
     } catch (err) {
