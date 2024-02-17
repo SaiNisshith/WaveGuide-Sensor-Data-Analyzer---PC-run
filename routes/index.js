@@ -23,7 +23,7 @@ router.get("/get_temp_data/:sensor",async (req,res)=>{
         let x = [],y=[];
         for(let i=0; i<plot.length; i++){
             let time = new Date(plot[i].createdAt + (5*60*60*1000 + 30*60*1000));
-            x.push(time.getDate()+"/"+time.getMonth()+"/"+time.getFullYear() +" ; "+ time.getHours()+":"+time.getMinutes()+":"+time.getSeconds());
+            x.push(time.getDate()+"/"+(time.getMonth()+1)+"/"+time.getFullYear() +" ; "+ time.getHours()+":"+time.getMinutes()+":"+time.getSeconds());
             y.push(parseFloat(plot[i].temperature[sensor-1]));
         }
         return res.status(200).send({
