@@ -64,3 +64,9 @@ module.exports.Monitor = function(req,res){
     }
    return res.redirect('/');
 }
+
+module.exports.clear = function(){
+    regressionEquations = [];
+    ref_Tof = [];
+    check = false;
+}

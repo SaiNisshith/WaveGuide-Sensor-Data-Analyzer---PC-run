@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const find_peaks = require('./../controllers/find_peaks');
+
 const refresh_all_tof = require('./../controllers/refresh_all_tof');
-const find_tof = require('./../controllers/find_tof');
 const TimeVsTemp = require('../models/timevstemp');
 const mongoose = require('../config/mongoose');
-const find_temp_vs_time = require('./../controllers/find_temp_vs_time');
 var watch = require('node-watch');
 const fs = require('fs-extra');
 const monitor = require('../controllers/getTempvsTime');
@@ -63,6 +61,7 @@ router.get('/refresh',async function(req,res){
         min_height = glob[0].min_height,
         min_distance = glob[0].min_distance;
     try {
+        monitor.clear();
         await refresh_all_tof.readTheExcelFiles(parseInt(non),path.resolve(req.query.path),parseFloat(low_point),parseFloat(high_point),parseFloat(min_height),parseFloat(min_distance));
         return res.redirect('/');
     } catch (error) {
