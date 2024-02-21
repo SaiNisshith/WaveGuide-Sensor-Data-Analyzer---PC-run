@@ -4,13 +4,13 @@
 WaveGuide Sensor Data Analyzer - PC Run
 
 ## Description
-This project aims to analyze temperature data collected from a waveguide setup using PicoScope equipment and software. It utilizes a supervised polynomial regression machine learning model to predict temperature based on the collected wave data. The trained model continuously improves with more refined data input. Users can monitor live temperature data remotely via a website or through a desktop application.
+WaveGuide Sensor Data Analyzer - PC Run is a tool designed to analyze temperature data collected from a waveguide setup using PicoScope equipment and software. It employs a supervised polynomial regression machine learning model to predict temperature based on the collected wave data. The model continuously improves with more refined data input. Users can monitor live temperature data remotely via a website or through a desktop application.
 
 ## Features
-- **Live Temperature Observation**: Monitor temperature data remotely from anywhere with an internet connection.
+- **Live Temperature Observation**: Monitor temperature data remotely from anywhere with an internet connection. Live data is accessible on the website [here](https://wda-e03r.onrender.com/), updating every 10 seconds.
 - **Data Download**: Download temperature data from the past three days via both the desktop application and the website.
-- **Customizable Parameters**: Users can customize various parameters to adapt to their specific waveguide setup.
-- **Easy Data Training**: Simplified process for training the machine learning model with user-provided data.
+- **Customizable Parameters**: Adapt the tool to your specific waveguide setup by customizing various parameters, including high-point, low-point, minimum height, minimum distance, and number of notches.
+- **Easy Data Training**: Simplified process for training the machine learning model with user-provided data. The model becomes more accurate as you feed it more refined data.
 
 ## Installation
 1. **Clone the repository**:
@@ -23,16 +23,15 @@ This project aims to analyze temperature data collected from a waveguide setup u
     npm install
     ```
 
-3. **To temporarily test the app, run**:
+3. **Start the application temporarily**:
     ```
     npm start
     ```
-   **To create a desktop app for your PC, run**:
+   **Create a desktop app**:
     ```
     npm run make
     ```
-
-4. **Navigate to the `out/make/squirrel.windows` directory** to find the `.exe` file for the desktop app.
+   This will create a desktop application suitable for your PC. You can find the executable file in the `out/make/squirrel.windows` directory.
 
 ## Usage
 1. **Setup**:
@@ -47,13 +46,12 @@ This project aims to analyze temperature data collected from a waveguide setup u
      - Number of Notches: Number of notches you have kept for your waveguide.
 
 3. **Train Data**:
-   - Feed excel files named with the observed temperature values.
-   - Save the files with the temperature observed in the thermocouple (e.g., `35.xlsx` for 35°C).
-   - Select the folder path and click "Refresh the feed" button.
+   - Feed excel files named with the observed temperature values. For example, if the temperature observed in the thermocouple is 35°C, save the file as `35.xlsx`.
+   - Select the folder path containing the excel files and click the "Refresh the feed" button.
 
 4. **Predictions**:
    - Monitor incoming waveform signal files for temperature predictions.
-   - Select the folder path and click "Monitor this folder" button.
+   - Select the folder path containing the waveform signal files and click the "Monitor this folder" button.
 
 5. **Access Live Data**:
    - Access live temperature data every 10 seconds via the desktop app or the web app [here](https://wda-e03r.onrender.com/).
@@ -62,7 +60,12 @@ This project aims to analyze temperature data collected from a waveguide setup u
    - Download temperature data directly from the desktop or web app.
 
 ## Contact
-For any inquiries or support, please email sainisshith@gmail.com or connect with me on [LinkedIn](https://www.linkedin.com/in/sai-nisshith-51a381237/).
+For any inquiries, feedback, or support, please feel free to reach out:
+
+- **Email**: [sainisshith@gmail.com](mailto:sainisshith@gmail.com)
+- **LinkedIn**: [Sai Nisshith](https://www.linkedin.com/in/sai-nisshith-51a381237/)
+
+Your feedback and suggestions are highly appreciated!
 
 ---
 
