@@ -12,6 +12,12 @@ WaveGuide Sensor Data Analyzer - PC Run is a tool designed to analyze temperatur
 - **Customizable Parameters**: Adapt the tool to your specific waveguide setup by customizing various parameters, including high-point, low-point, minimum height, minimum distance, and number of notches.
 - **Easy Data Training**: Simplified process for training the machine learning model with user-provided data. The model becomes more accurate as you feed it more refined data.
 
+## Prerequisites
+Before proceeding with the installation, ensure you have the following installed on your system:
+- [Node.js](https://nodejs.org/)
+- [Git](https://git-scm.com/)
+- npm (Node.js package manager), which typically comes with Node.js installation
+
 ## Installation
 1. **Clone the repository**:
     ```
