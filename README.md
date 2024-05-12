@@ -26,7 +26,10 @@ Before proceeding with the installation, ensure you have the following installed
 2. **Set up MongoDB Atlas URL**:
 
     After cloning the repository, you need to set up an environment variable for the MongoDB Atlas URL.
-        UWG_MONGODB_ATLAS_URL = YOUR_URL 
+    ```
+    UWG_MONGODB_ATLAS_URL = YOUR_URL 
+    ```
+        
    Create the MongoDB_ATLAS Database and paste that instance in the YOUR_URL
 4. **Install dependencies**:
     ```
