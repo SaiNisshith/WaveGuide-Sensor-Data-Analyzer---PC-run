@@ -23,8 +23,15 @@ Before proceeding with the installation, ensure you have the following installed
     ```
     git clone https://github.com/SaiNisshith/WaveGuide-Sensor-Data-Analyzer---PC-run
     ```
+2. **Set up MongoDB Atlas URL**:
 
-2. **Install dependencies**:
+    After cloning the repository, you need to set up an environment variable for the MongoDB Atlas URL.
+
+        ```plaintext
+        UWG_MONGODB_ATLAS_URL = YOUR_URL 
+        ```
+   Create the MongoDB_ATLAS Database and paste that instance in the YOUR_URL
+4. **Install dependencies**:
     ```
     npm install
     ```
@@ -38,6 +45,7 @@ Before proceeding with the installation, ensure you have the following installed
     npm run make
     ```
    This will create a desktop application suitable for your PC. You can find the executable file in the `out/make/squirrel.windows` directory.
+
 
 ## Usage
 1. **Setup**:
